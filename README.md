@@ -19,5 +19,5 @@ This repository contains codes for both magnon-driven hopfion motion and hopfion
 - "orbit2png.py" shows the magnon orbits in a picture containing the F field.
 - "orbit2png.sh" exemplifies the usage of "orbits2png.py".
 
-References
+## References
 [1] Zhang, Z., Lin, K., Zhang, Y., Bournel, A., Xia, K., Kläui, M., & Zhao, W. (2023). Magnon scattering modulated by omnidirectional hopfion motion in antiferromagnets for meta-learning. Science advances, 9(6), eade7439.
