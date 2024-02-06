@@ -1,0 +1,68 @@
+CellSize	:= 0.5e-9
+SetGridSize(100, 100, 100)
+SetCellSize(CellSize, CellSize, CellSize)
+DefRegion(1, XRange(24.5e-9, 25e-9))
+DefRegion(2, XRange(-25e-9, -24.5e-9))
+OpenBC		= true
+EnableDemag	= false
+
+// MnSi parameters
+Ms		:= 1.51e5
+Msat		= Ms
+A		:= 0.5e-12
+Aex		= -A
+//Kc1		= 1e3
+//anisC1	= vector(1, 0, 0)
+//anisC2	= vector(0, 1, 0)
+Ku1		= 1e4
+anisU		= vector(0, 0, 1)
+alpha		= 0.005
+//Dbulk		= 0.115e-3
+
+// Extra Exchange Field (J4)
+mx2	:= Shifted(m,2,0,0)
+mx_2	:= Shifted(m,-2,0,0)
+my2	:= Shifted(m,0,2,0)
+my_2	:= Shifted(m,0,-2,0)
+mz2	:= Shifted(m,0,0,2)
+mz_2	:= Shifted(m,0,0,-2)
+laplacian2 := Add(Add(Add(Add(Add(mx2, mx_2), my2), my_2), mz2), mz_2)
+
+Bex	:= A*0.248
+BField	:= Mul( Const(-2.0/Ms * Bex/(CellSize*CellSize)), laplacian2)
+BEdens	:= Mul( Const(Bex/(CellSize*CellSize)), Dot(laplacian2, m))
+
+AddFieldTerm(BField)
+AddEdensTerm(BEdens)
+
+// Spin Configuration
+m.LoadFile("stable-state-h+1+2.ovf")
+
+// Spin Wave
+// Start the Simulation
+B_sw	:= 2.0
+f_sw	:= 440e9 * 2*pi
+f_curve := 2*pi / 100e-9
+phi_shift := pi*67.5/180
+
+for i:=0; i<100; i++ {
+
+	//x	:= cos(t*f_curve) - 1.5 * cos(2*t*f_curve);
+	//y	:= sin(t*f_curve) + 1.5 * sin(2*t*f_curve);
+	phase	:= t*f_curve
+	z	:= -1.0 * sin(3*phase)
+
+	theta	:= 1.47729 + 0.84531 * cos(3*phase) - 0.08367 * cos(6*phase)
+	phi	:= 1.57080 + 0.33241 * sin(3*phase) - 0.05540 * sin(6*phase) - 2*phase
+	amp	:= 3.75268 + 0.75232 * cos(3*phase) + 0.57089 * cos(6*phase) - 0.055826 * cos(9*phase)
+	Amp1	:= B_sw * sqrt(amp / 3.5 * exp(z/5))
+	Amp2	:= B_sw * sqrt(amp / 3.5 * exp(-z/5))
+
+	B_ext.setRegion(1, Vector(Amp1 * cos(theta/2) * cos(f_sw*t),
+				  Amp1 * sin(theta/2) * cos(f_sw*t + phi + phi_shift) * 0.778, 0))
+	B_ext.setRegion(2, Vector(Amp2 * sin(theta/2) * cos(f_sw*t),
+				  Amp2 * cos(theta/2) * cos(f_sw*t - phi + phi_shift) * 0.778, 0))
+
+	run(100e-11)
+	save(m)
+}
