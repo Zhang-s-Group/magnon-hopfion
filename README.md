@@ -13,7 +13,7 @@ This repository contains codes for both magnon-driven hopfion motion and hopfion
 - "track.sh" exemplifies the usage of "track.py"
 
 ### Magnon orbits and Momentum Transfer.
-- "udf/m-equiv.ovf" is the spin configuration
+- "3d-motion/stable-state-h+1+2.ovf" is the spin configuration. "udf/m-equiv.orf" in some codes refers to the same file.
 - "scatter.py" calculates the momentum transferred from magnons to the hopfion for various wavnumbers.
 - "orbit.py" calculates the magnon orbits.
 - "orbit2png.py" shows the magnon orbits in a picture containing the F field.
