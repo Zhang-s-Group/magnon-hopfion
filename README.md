@@ -2,6 +2,7 @@
 This repository contains codes for both magnon-driven hopfion motion and hopfion-induced magnon motion.
 - Magnon motion is calculated using geometric optical method. This method is based on eikonal approximation and applies for magnon with high frequency. Our programs calculate the orbits of spin wave packets (magnons) and predict the momentum transferred from magnons to the hopfion. 
 - Hopfion motion is simulated using MuMax3, a micromagnetic simulation software. This repository also contains the codes for hopfions to move freely in 3D space (omnidirectional motion).
+- It also contains the python library for reading and writing OVF files (OOMMF Vector Field File Format) used by OOMMF and MuMax3.
 
 ## Files
 ### Hopfion's Omnidirectional Motion.
