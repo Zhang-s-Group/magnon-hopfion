@@ -7,7 +7,7 @@ This repository contains codes for both magnon-driven hopfion motion and hopfion
 ### Hopfion's Omnidirectional Motion.
 - "ovf.py" is a package used to deal with the Vector Field File Format (OVF)
 - "plotvf.py" is a package used to plot OVF files.
-- Programs in "samples" exemplifies the usage of these two packages.
+- Programs in "samples" exemplifies the usage of these two packages. "sample-osf.py" is used to plot a scalar field, "sample-ovf.py" to plot a vector field, and "sample-udf.py" to create a user-defined vector field.
 - "3d-motion" contains the MuMax3 files simulating the omnidirectional motion of the hopfion.
 - "track.py" locates the hopfion in the space.
 - "track.sh" exemplifies the usage of "track.py"
